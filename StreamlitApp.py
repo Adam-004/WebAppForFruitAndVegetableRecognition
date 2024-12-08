@@ -3,9 +3,12 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 import numpy as np
+import gdown
+import os
 from PIL import Image
 
 # Constants
+MODEL_URL = "https://drive.google.com/file/d/14JLafC78jVvnnnd2YpyC8U2auwJsQZIC/view?usp=sharing"
 MODEL_PATH = 'model/model.keras'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 CLASS_LABELS = [
@@ -20,6 +23,15 @@ CLASS_LABELS = [
 # Load the trained model
 @st.cache_resource
 def load_trained_model():
+    # Ensure the 'model' directory exists
+    os.makedirs('model', exist_ok=True)
+
+    # Google Drive file ID for the model
+    file_id = '14JLafC78jVvnnnd2YpyC8U2auwJsQZIC'  # Replace with the actual file ID
+    download_url = f'https://drive.google.com/uc?export=download&id={file_id}'
+
+    # Download the file
+    gdown.download(download_url, MODEL_PATH, quiet=False)   
     model = load_model(MODEL_PATH)
     return model
 
