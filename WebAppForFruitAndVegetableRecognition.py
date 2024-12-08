@@ -1,3 +1,28 @@
+#Installs
+import subprocess
+import sys
+
+# List of required libraries
+required_packages = [
+    'Flask',
+    'tensorflow',
+    'numpy',
+    'Pillow',  # for image processing (load_img, img_to_array)
+]
+
+# Function to install missing packages
+def install_packages():
+    for package in required_packages:
+        try:
+            __import__(package)  # Try importing package
+        except ImportError:
+            print(f"Package {package} not found. Installing...")
+            subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+# Install missing packages before importing
+install_packages()
+
+#Imports
 from flask import Flask, request, render_template_string, send_from_directory
 import tensorflow as tf
 from tensorflow.keras.models import load_model, Sequential
