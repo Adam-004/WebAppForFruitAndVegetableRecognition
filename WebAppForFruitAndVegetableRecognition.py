@@ -4,6 +4,7 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model, Sequential
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.layers import Dense
+import gdown
 import numpy as np
 import os
 
@@ -13,6 +14,7 @@ app = Flask(__name__)
 # Constants
 MODEL_PATH = 'model/model.keras'
 UPLOAD_FOLDER = 'uploads'
+MODEL_URL = "https://drive.google.com/file/d/14JLafC78jVvnnnd2YpyC8U2auwJsQZIC/view?usp=sharing"
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 CLASS_LABELS = [
     'apple', 'banana', 'beetroot', 'bell pepper', 'cabbage', 'capsicum',
@@ -30,6 +32,16 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 # Load the model (with error handling for missing model file)
 def load_trained_model():
     try:
+        # Ensure the 'model' directory exists
+        os.makedirs('model', exist_ok=True)
+
+        # Google Drive file ID for the model
+        file_id = '14JLafC78jVvnnnd2YpyC8U2auwJsQZIC'  # Replace with the actual file ID
+        download_url = f'https://drive.google.com/uc?export=download&id={file_id}'
+
+        # Download the file
+        gdown.download(download_url, MODEL_PATH, quiet=False)
+
         model = load_model(MODEL_PATH)
         print("Model loaded successfully.")
         return model

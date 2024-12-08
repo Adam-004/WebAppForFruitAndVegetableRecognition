@@ -2,4 +2,5 @@ Flask
 tensorflow
 numpy
 Pillow  # for image processing
+gdown
 gunicorn #for Render
