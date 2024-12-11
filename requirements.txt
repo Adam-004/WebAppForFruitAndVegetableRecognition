@@ -3,4 +3,5 @@ tensorflow
 numpy
 Pillow  # for image processing
 gdown
+pyngrok
 gunicorn #for Render
